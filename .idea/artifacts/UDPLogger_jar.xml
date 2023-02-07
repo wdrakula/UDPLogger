@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="UDPLogger:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/UDPLogger_jar</output-path>
+    <root id="archive" name="UDPLogger.jar">
+      <element id="module-output" name="UDPLogger" />
+    </root>
+  </artifact>
+</component>

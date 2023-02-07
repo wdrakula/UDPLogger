@@ -1,0 +1,6 @@
+From:/10.168.13.9>>Main loop is still here! 07.Feb.2023 12:27:37 (5896)s 
+
+From:/10.168.13.9>>UART task is still here! 5897 
+
+From:/10.168.13.9>>Sensor task is still here! 5905 
+
