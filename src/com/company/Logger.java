@@ -89,7 +89,9 @@ public class Logger implements Runnable{
                 fr.write("From:" + clientAddress + ">>" + s + "\n");
                 ta.append("From:" + clientAddress + ">>" + s + "\n");
                 while (ta.getLineCount() > 50) {
-                    ta.setText(ta.getText().substring(ta.getText().indexOf('\n')+1));
+                    if (ta.getText().indexOf('\n') + 1 < ta.getDocument().getLength()) {
+                        ta.setText(ta.getText().substring(ta.getText().indexOf('\n') + 1));
+                    }
                 }
                 ta.setCaretPosition(ta.getDocument().getLength());
 

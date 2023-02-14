@@ -1,20 +1,41 @@
-#include "time.h"
+#include <WiFi.h>
 
-static const char *TAG __attribute__((unused)) = "MyModule";
+#include "time.h"
+#include "logger.h"
+
+
+const char *ssid = "42km";
+const char *password = "1029384756";
+
+bool loggerOn = true;
+const char *udpAddress = "10.168.13.13";
+int udpPort = 3333;
 
 
 void setup()
 {
 
-
   Serial.begin(115200);
 
-//** тут нужен еще сетап сети, конечно
+  WiFi.mode(WIFI_STA);
+
+  WiFi.begin(ssid, password);
+
+  while (WiFi.status() != WL_CONNECTED)
+  {
+    delay(500);
+    Serial.print(".");
+  }
+
+  Serial.println("");
+  Serial.println("WiFi connected.");
+  Serial.println("IP address: ");
+  Serial.println(WiFi.localIP());
+  
   loggerSetup();
   configTime(0, 0, "pool.ntp.org");
 }
 
-// часть потоков сделана задачами, неблокирующие можно запускать тут.
 void loop()
 {
 
@@ -24,7 +45,7 @@ void loop()
   static uint32_t omWIFI = millis();
   uint32_t nm = millis();
 
-  if (nm - omLog > 10000)
+  if (nm - omLog > 1000)
   {
     struct tm now;
     char s[64] = {0};
@@ -33,7 +54,8 @@ void loop()
     {
       strftime(s, 62, "%d.%b.%Y %H:%M:%S", &now);
     }
-    UDPDebug("Main loop is still here! %s (%d)s \n", s, millis() / 1000);
+    UDPDebug("Main loop is still here! %s (%d)s", s, (int)millis() / 1000);
+    //Serial.printf("Main loop is still here! %s (%d)s \r\n", s, (int)millis() / 1000);
     omLog = nm;
   }
 
@@ -45,5 +67,4 @@ void loop()
     WiFi.reconnect();
     omWIFI = nm;
   }
-
 }
